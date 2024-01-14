@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -20,4 +21,5 @@ public class BoxeadorResponse {
     private String apellido;
     private Double peso_kg;
     private String categoria;
+    private Timestamp fecha_inscripcion;
 }

@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,7 @@ public class BoxeadorService {
 
     public BoxeadorResponse createBoxeador(Boxeador boxeador){
         boxeador.setCategoria(categoriaService.getCategoriaByPeso(boxeador.getPeso_kg()));
+        boxeador.setFechaInscripcion(Timestamp.valueOf(LocalDateTime.now()));
         //Si el entrenador tiene disponibilidad, lo asigno. Si no tiene disponibilidad, tiro exception.
         if (entrenadorService.verificarDisponibilidadByEntrenador(boxeador.getCategoria().getEntrenador())){
             return getBoxeadorResponseDto(boxeadorRepository.save(boxeador));
@@ -39,6 +43,7 @@ public class BoxeadorService {
         boxeadorResponse.setApellido(boxeador.getApellido());
         boxeadorResponse.setPeso_kg(boxeador.getPeso_kg());
         boxeadorResponse.setCategoria(boxeador.getCategoria().getNombre());
+        boxeadorResponse.setFecha_inscripcion(boxeador.getFechaInscripcion());
 
         return boxeadorResponse;
     }
@@ -53,6 +58,7 @@ public class BoxeadorService {
             response.setApellido(boxeador.getApellido());
             response.setPeso_kg(boxeador.getPeso_kg());
             response.setCategoria(boxeador.getCategoria().getNombre());
+            response.setFecha_inscripcion(boxeador.getFechaInscripcion());
 
             lstToReturn.add(response);
         });
@@ -60,6 +66,16 @@ public class BoxeadorService {
         return lstToReturn;
     }
 
+    public List<BoxeadorResponse> obtenerAltasDiarias() {
+        Timestamp fechaActual = Timestamp.valueOf(LocalDate.now().atStartOfDay());
+
+        return getBoxeadorResponseDto(boxeadorRepository.findByFechaInscripcionBetween(
+                fechaActual,
+                Timestamp.valueOf(fechaActual.toLocalDateTime().toLocalDate().plusDays(1).atStartOfDay())
+        ));
+
+
+    }
     public void deleteBoxeador(Boxeador boxeador){
         boxeadorRepository.delete(boxeador);
     }

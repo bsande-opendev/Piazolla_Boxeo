@@ -4,6 +4,7 @@ import com.bauti.piazolla_gestion.dto.BoxeadorResponse;
 import com.bauti.piazolla_gestion.entities.Boxeador;
 import com.bauti.piazolla_gestion.exceptions.LimiteAlumnosExcedidoException;
 import com.bauti.piazolla_gestion.services.BoxeadorService;
+import com.bauti.piazolla_gestion.tasks.ReporteAltasTask;
 import com.bauti.piazolla_gestion.utils.ResponseConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -27,6 +28,9 @@ import java.util.NoSuchElementException;
 public class BoxeadorController {
     @Autowired
     BoxeadorService boxeadorService;
+
+    @Autowired
+    ReporteAltasTask reporteAltasTask;
 
     @GetMapping
     @Operation(summary = "Obtiene todos los boxeadores", description = "Devuelve un array con todos los boxeadores")
@@ -71,5 +75,11 @@ public class BoxeadorController {
         } catch (Exception e){
             return new ResponseEntity(ResponseConstants.SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/reporte")
+    public ResponseEntity imprimir(){
+        reporteAltasTask.imprimirReporteAltasDiario();
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

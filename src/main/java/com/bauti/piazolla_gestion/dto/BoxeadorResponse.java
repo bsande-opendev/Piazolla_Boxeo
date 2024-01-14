@@ -1,0 +1,21 @@
+package com.bauti.piazolla_gestion.dto;
+
+import com.bauti.piazolla_gestion.entities.Categoria;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class BoxeadorResponse {
+
+    private Long id;
+    private String nombre;
+    private String apellido;
+    private Double peso_kg;
+    private String categoria;
+}

@@ -1,5 +1,7 @@
 package com.bauti.piazolla_gestion.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +24,13 @@ public class Categoria {
     private String nombre;
     private Double minimo_kg;
     private Double maximo_kg;
-    @ManyToMany(mappedBy = "categorias")
-    Set<Entrenador> entrenadores;
+
+    @ManyToOne
+    @JoinColumn(name = "entrenador_id")
+    @JsonBackReference
+    private Entrenador entrenador;
+
     @OneToMany(mappedBy = "categoria")
-    Set<Boxeador> boxeadores;
+    @JsonManagedReference
+    private Set<Boxeador> boxeadores;
 }

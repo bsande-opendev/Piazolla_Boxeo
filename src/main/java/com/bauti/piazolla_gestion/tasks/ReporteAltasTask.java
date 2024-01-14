@@ -3,6 +3,7 @@ package com.bauti.piazolla_gestion.tasks;
 import com.bauti.piazolla_gestion.dto.BoxeadorResponse;
 import com.bauti.piazolla_gestion.entities.Boxeador;
 import com.bauti.piazolla_gestion.services.BoxeadorService;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@CommonsLog
 public class ReporteAltasTask {
 
     @Autowired
@@ -47,9 +49,9 @@ public class ReporteAltasTask {
                 writer.newLine();
                 writer.write("-----------------------------------------");
             }
-            System.out.println("Informe guardado en el archivo: " + fileName);
+            log.info("Informe guardado en el archivo: " + fileName);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error en CategoriaController: " + e.getMessage(), e);
         }
     }
 }

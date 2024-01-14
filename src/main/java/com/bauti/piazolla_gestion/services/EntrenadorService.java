@@ -20,12 +20,4 @@ public class EntrenadorService {
         return alumnos < 5;
     }
 
-    public Entrenador createEntrenador(Entrenador entrenador){
-        return entrenadorRepository.save(entrenador);
-    }
-
-    public void deleteEntrenador(Entrenador entrenador){
-        entrenadorRepository.delete(entrenador);
-    }
-
 }

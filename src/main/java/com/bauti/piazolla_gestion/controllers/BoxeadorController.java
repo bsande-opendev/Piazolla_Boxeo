@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,9 @@ import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/boxeadores")
+@CommonsLog
 public class BoxeadorController {
+
     @Autowired
     BoxeadorService boxeadorService;
 
@@ -38,6 +41,8 @@ public class BoxeadorController {
         try {
             return new ResponseEntity<>(boxeadorService.getAllBoxeadores(), HttpStatus.OK);
         } catch (Exception e){
+            log.error("Error en BoxeadorController: " + e.getMessage());
+            log.error(e.getStackTrace());
             return new ResponseEntity<>(ResponseConstants.SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -48,8 +53,11 @@ public class BoxeadorController {
         try {
             return new ResponseEntity<>(boxeadorService.getBoxeadorById(id), HttpStatus.OK);
         } catch (NoSuchElementException e){
+            log.error("Error en BoxeadorController: " + e.getMessage(), e);
             return new ResponseEntity<>(ResponseConstants.BOXEADOR_NOT_FOUND, HttpStatus.NOT_FOUND);
         } catch (Exception e){
+            log.error("Error en BoxeadorController: " + e.getMessage(), e);
+            log.error(e.getStackTrace());
             return new ResponseEntity<>(ResponseConstants.SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -60,8 +68,10 @@ public class BoxeadorController {
         try {
             return new ResponseEntity<>(boxeadorService.createBoxeador(boxeador), HttpStatus.CREATED);
         } catch (LimiteAlumnosExcedidoException e){
+            log.error("Error en BoxeadorController: " + e.getMessage(), e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         }  catch (Exception e){
+            log.error("Error en BoxeadorController: " + e.getMessage(), e);
             return new ResponseEntity<>(ResponseConstants.SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -73,6 +83,7 @@ public class BoxeadorController {
             boxeadorService.deleteBoxeadorById(id);
             return new ResponseEntity<>(ResponseConstants.BOXEADOR_ELIMINADO, HttpStatus.OK);
         } catch (Exception e){
+            log.error("Error en BoxeadorController: " + e.getMessage(), e);
             return new ResponseEntity(ResponseConstants.SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

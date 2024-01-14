@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.NoSuchElementException;
 
 @RequestMapping("/categorias")
 @Controller
+@CommonsLog
 public class CategoriaController {
     @Autowired
     CategoriaService categoriaService;
@@ -28,6 +30,7 @@ public class CategoriaController {
         try {
             return new ResponseEntity<>(categoriaService.getAllCategorias(), HttpStatus.OK);
         } catch (Exception e){
+            log.error("Error en CategoriaController: " + e.getMessage(), e);
             return new ResponseEntity(ResponseConstants.SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -38,8 +41,10 @@ public class CategoriaController {
         try {
             return new ResponseEntity(categoriaService.getCategoriaById(id), HttpStatus.OK);
         } catch (NoSuchElementException e){
+            log.error("Error en CategoriaController: " + e.getMessage(), e);
             return new ResponseEntity<>(ResponseConstants.CATEGORIA_NOT_FOUND, HttpStatus.NOT_FOUND);
         } catch (Exception e){
+            log.error("Error en CategoriaController: " + e.getMessage(), e);
             return new ResponseEntity<>(ResponseConstants.SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -50,6 +55,7 @@ public class CategoriaController {
         try {
             return new ResponseEntity(categoriaService.createOrUpdateCategoria(categoria), HttpStatus.CREATED);
         } catch (Exception e){
+            log.error("Error en CategoriaController: " + e.getMessage(), e);
             return new ResponseEntity<>(ResponseConstants.SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -59,6 +65,7 @@ public class CategoriaController {
         try {
             return new ResponseEntity(categoriaService.createOrUpdateCategoria(categoria), HttpStatus.OK);
         } catch (Exception e){
+            log.error("Error en CategoriaController: " + e.getMessage(), e);
             return new ResponseEntity<>(ResponseConstants.SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -70,6 +77,7 @@ public class CategoriaController {
             categoriaService.deleteCategoria(id);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e){
+            log.error("Error en CategoriaController: " + e.getMessage(), e);
             return new ResponseEntity<>(ResponseConstants.SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

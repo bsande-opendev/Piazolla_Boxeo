@@ -3,6 +3,11 @@ package com.bauti.piazolla_gestion.controllers;
 import com.bauti.piazolla_gestion.entities.Categoria;
 import com.bauti.piazolla_gestion.services.CategoriaService;
 import com.bauti.piazolla_gestion.utils.ResponseConstants;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +23,7 @@ public class CategoriaController {
     CategoriaService categoriaService;
 
     @GetMapping
+    @Operation(summary = "Obtiene todas las categorias", description = "Devuelve un array que contiene todas las categorias del gimnasio")
     public ResponseEntity getAllCategorias(){
         try {
             return new ResponseEntity<>(categoriaService.getAllCategorias(), HttpStatus.OK);
@@ -27,6 +33,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Obtiene una categoria", description = "Devuelve la categoría con el id especificado")
     public ResponseEntity getCategoriaById(@PathVariable Long id){
         try {
             return new ResponseEntity(categoriaService.getCategoriaById(id), HttpStatus.OK);
@@ -38,6 +45,7 @@ public class CategoriaController {
     }
 
     @PostMapping
+    @Operation(summary = "Crea una categoria", description = "Crea una categoría y luego la devuelve")
     public ResponseEntity createCategoria(@RequestBody Categoria categoria){
         try {
             return new ResponseEntity(categoriaService.createOrUpdateCategoria(categoria), HttpStatus.CREATED);
@@ -46,6 +54,7 @@ public class CategoriaController {
         }
     }
     @PutMapping
+    @Operation(summary = "Modifica una categoria", description = "Modifica una categoría y luego la devuelve")
     public ResponseEntity updateCategoria(@RequestBody Categoria categoria){
         try {
             return new ResponseEntity(categoriaService.createOrUpdateCategoria(categoria), HttpStatus.OK);
@@ -55,6 +64,7 @@ public class CategoriaController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Elimina una categoria", description = "Elimina la categoría con el id especificado")
     public ResponseEntity deleteCategoriaById(@PathVariable Long id){
         try {
             categoriaService.deleteCategoria(id);

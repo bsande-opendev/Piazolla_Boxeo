@@ -1,9 +1,19 @@
 package com.bauti.piazolla_gestion.controllers;
 
+import com.bauti.piazolla_gestion.dto.BoxeadorResponse;
 import com.bauti.piazolla_gestion.entities.Boxeador;
 import com.bauti.piazolla_gestion.exceptions.LimiteAlumnosExcedidoException;
 import com.bauti.piazolla_gestion.services.BoxeadorService;
 import com.bauti.piazolla_gestion.utils.ResponseConstants;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +29,7 @@ public class BoxeadorController {
     BoxeadorService boxeadorService;
 
     @GetMapping
+    @Operation(summary = "Obtiene todos los boxeadores", description = "Devuelve un array con todos los boxeadores")
     public ResponseEntity getAllBoxeadores(){
         try {
             return new ResponseEntity<>(boxeadorService.getAllBoxeadores(), HttpStatus.OK);
@@ -28,7 +39,8 @@ public class BoxeadorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getBoxeadorById(@PathVariable Long id){
+    @Operation(summary = "Obtiene un boxeador", description = "Devuelve el boxeador con el id especificado")
+    public ResponseEntity getBoxeadorById(@PathVariable @Parameter(name = "id", description = "id del Boxeador", example = "1") Long id){
         try {
             return new ResponseEntity<>(boxeadorService.getBoxeadorById(id), HttpStatus.OK);
         } catch (NoSuchElementException e){
@@ -39,6 +51,7 @@ public class BoxeadorController {
     }
 
     @PostMapping
+    @Operation(summary = "Da de alta un boxeador", description = "Crea un boxeador, lo asigna a una categoria y luego devuelve los datos")
     public ResponseEntity createBoxeador(@RequestBody Boxeador boxeador){
         try {
             return new ResponseEntity<>(boxeadorService.createBoxeador(boxeador), HttpStatus.CREATED);
@@ -50,6 +63,7 @@ public class BoxeadorController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Elimina un boxeador", description = "Elimina el boxeador según el Id especificado")
     public ResponseEntity deleteBoxeadorById(@PathVariable Long id){
         try {
             boxeadorService.deleteBoxeadorById(id);

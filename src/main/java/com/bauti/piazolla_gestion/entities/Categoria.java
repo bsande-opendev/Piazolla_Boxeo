@@ -2,6 +2,7 @@ package com.bauti.piazolla_gestion.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

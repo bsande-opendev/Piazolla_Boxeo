@@ -3,41 +3,38 @@
 
     <property name="LOGS" value="./logs" />
 
-    <appender name="Console"
-              class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
-                %d{ISO8601} %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
+                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
             </Pattern>
         </layout>
+        <param name="Threshold" value="info"/>
     </appender>
 
-    <appender name="RollingFile"
-              class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGS}/log_errores.log</file>
-        <encoder
-                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+    <appender name="ErrorFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/errores.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
         </encoder>
 
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOGS}/archived/log_errores-%d{yyyy-MM-dd}.%i.log
+            <fileNamePattern>${LOGS}/archived/spring-boot-logger-%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>10MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>error</level>
+        </filter>
     </appender>
 
-    <root level="error">
-        <appender-ref ref="RollingFile" />
-    </root>
-
-
-    <logger name="com.bauti" level="trace" additivity="false">
+    <root level="info">
+        <appender-ref ref="ErrorFile" />
         <appender-ref ref="Console" />
-    </logger>
+    </root>
 
 </configuration>

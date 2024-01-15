@@ -31,3 +31,17 @@ No se cargan boxeadores por defecto.
 
 Si bien el reporte está seteado para imprimirse todos los días a las 23:59hs, dejé expuesto un endpoint para forzar
 su impresión en **/piazolla/api/boxeadores/reporte**
+
+## Test y reportes de cobertura
+
+El proyecto cuenta con Jacoco para analizar coverage de los test y hacer un reporte.
+Para testear la aplicación se debe ejecutar el goal "test" de maven
+```
+mvn test
+```
+
+Y para generar el reporte de Jacoco se debe ejecutar
+```
+mvn jacoco:report
+```
+Este comando generará una página html en el directorio /target/site para poder inspeccionar el reporte.

@@ -53,7 +53,7 @@ public class CategoriaService {
         categoriaResponse.setId(categoria.getId());
         categoriaResponse.setNombre(categoria.getNombre());
         categoriaResponse.setMinimo_kg(categoria.getMinimo_kg());
-        categoriaResponse.setMaximo_kg(categoriaResponse.getMaximo_kg());
+        categoriaResponse.setMaximo_kg(categoria.getMaximo_kg());
         categoriaResponse.setBoxeadores(categoria.getBoxeadores());
         categoriaResponse.setEntrenador(categoria.getEntrenador().getNombre()+" "+categoria.getEntrenador().getApellido());
 
@@ -69,4 +69,6 @@ public class CategoriaService {
 
         return lstToReturn;
     }
+
+
 }

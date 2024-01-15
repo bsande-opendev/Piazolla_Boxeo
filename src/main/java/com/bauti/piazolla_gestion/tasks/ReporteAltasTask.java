@@ -48,6 +48,7 @@ public class ReporteAltasTask {
                 writer.write("Fecha de Inscripción: " + dto.getFecha_inscripcion());
                 writer.newLine();
                 writer.write("-----------------------------------------");
+                writer.newLine();
             }
             log.info("Informe guardado en el archivo: " + fileName);
         } catch (IOException e) {

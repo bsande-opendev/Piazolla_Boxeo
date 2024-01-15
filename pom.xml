@@ -5,7 +5,7 @@
 
     <groupId>com.bauti</groupId>
     <artifactId>piazolla_gestion</artifactId>
-    <version>0.0.1</version>
+    <version>1.0</version>
     <name>piazolla_gestion</name>
     <description>Backend de gestión para un gimnasio de boxeo</description>
 
